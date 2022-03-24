@@ -32,8 +32,8 @@ This option allows you to interact with the [Power BI REST API](https://docs.mic
 
 To utilize this functionality you must install the Power BI Cmdlets for Powershell by utilizing the following command in PowerShell.
 
-```javascript
+```powershell
 Install-Module -Name MicrosoftPowerBIMgmt
 ```
 
-    Install-Module -Name MicrosoftPowerBIMgmt
+OK
