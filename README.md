@@ -36,4 +36,4 @@ To utilize this functionality you must install the Power BI Cmdlets for Powershe
 Install-Module -Name MicrosoftPowerBIMgmt
 ```
 
-    `Install-Module -Name MicrosoftPowerBIMgmt`
+    Install-Module -Name MicrosoftPowerBIMgmt
