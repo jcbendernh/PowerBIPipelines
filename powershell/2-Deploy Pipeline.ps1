@@ -1,7 +1,7 @@
 ﻿$body = @{ 
 
-    displayName = "COVID Power BI Pipeline Wed"
-    description = "My deployment pipeline description"
+    displayName = "insert pipeline name here"
+    description = "insert pipeline descrition here"
 
 } | ConvertTo-Json
 
