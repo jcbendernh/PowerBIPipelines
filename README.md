@@ -24,5 +24,5 @@ Also check out Deployment pipelines best practices](https://docs.microsoft.com/e
 
 This is done manually through the Power BI Workspace via a web browser.  There are some really good tutorials for this on Microsoft Docs:
 - [Get started with deployment pipelines](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-get-started)
-- [https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-get-started](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-assign)
+- [Assign a workspace to a deployment pipeline](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-assign)
 
