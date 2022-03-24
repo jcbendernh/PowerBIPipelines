@@ -1,7 +1,7 @@
 # PowerBIPipelines
 In this repo, I will walk you through three options available with regards to utilizing Power BI Pipelines:
 1. Manually through the Power BI Web Service
-2. Utilize Powershell commands via the Power BI Rest API
+2. Utilize PowerShell commands via the Power BI Rest API
 3. Utilize Azure DevOps
 
 ## Key Concepts
@@ -26,4 +26,11 @@ This is done manually through the Power BI Workspace via a web browser.  There a
 - [Get started with deployment pipelines](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-get-started)
 - [Assign a workspace to a deployment pipeline](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-assign)
 
-###  Utilize Powershell commands via the Power BI Rest API
+###  Utilize PowerShell commands via the Power BI Rest API
+
+This option allows you to interact with the [Power BI REST API](https://docs.microsoft.com/en-us/rest/api/power-bi/) to automate commands via HTTP reqeusts. Below are some example powershell scripts you can use that are based on the Powershell examples at https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-automation#powershell-example.  These scripts are also found in the [powershell folder](./powershell) of this repository.
+
+To utilize this functionality you must install the Power BI Cmdlets for Powershell by utilizing the following command in PowerShell.
+
+code(Install-Module -Name MicrosoftPowerBIMgmt)
+
