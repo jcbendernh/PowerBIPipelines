@@ -39,9 +39,9 @@ Install-Module -Name MicrosoftPowerBIMgmt
 For more on this topic check out [Microsoft Power BI Cmdlets for Windows PowerShell and PowerShell Core](https://docs.microsoft.com/en-us/powershell/power-bi/overview?view=powerbi-ps)
 
 1. First we need to connect to the Power BI service.  For the command below we are connecting as the Azure AD user, when running this, it will open an authentication prompt to connect as that user.
-```powershell
-Connect-PowerBIServiceAccount
-```
+    ```powershell
+    Connect-PowerBIServiceAccount
+    ```
 You can utilize other signin options.  They are detailed at [onnect-PowerBIServiceAccount](https://docs.microsoft.com/en-us/powershell/module/microsoftpowerbimgmt.profile/connect-powerbiserviceaccount?view=powerbi-ps)
 
 2. We will now create our pipeline using the code below.  Make sure to capture the id from the results after the script completes successfully.
