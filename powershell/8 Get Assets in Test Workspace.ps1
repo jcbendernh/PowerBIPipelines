@@ -1,7 +1,11 @@
-﻿$dataseturl = "groups/072d1087-6a43-4e93-8d79-1ebf36b9c03d/datasets" 
+﻿$dataseturl = "groups/insert test workspace ID/datasets" 
 $datasetdeployResult = Invoke-PowerBIRestMethod -Url $dataseturl  -Method Get 
 $datasetdeployResult 
 
-$reporturl = "groups/072d1087-6a43-4e93-8d79-1ebf36b9c03d/reports" 
+$reporturl = "groups/insert test workspace ID/reports" 
 $reportdeployResult = Invoke-PowerBIRestMethod -Url $reporturl  -Method Get 
 $reportdeployResult 
+
+$dashboardsurl = "groups/insert test workspace ID/dashboards" 
+$dashboardsdeployResult = Invoke-PowerBIRestMethod -Url $dashboardsurl  -Method Get 
+$dashboardsdeployResult 

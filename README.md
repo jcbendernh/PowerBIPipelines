@@ -50,8 +50,8 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     ```powershell
     $body = @{ 
 
-        displayName = "[insert pipeline name here]"
-        description = "[insert pipeline descrition here]"
+        displayName = "insert pipeline name here"
+        description = "insert pipeline descrition here"
 
     } | ConvertTo-Json
 
@@ -79,48 +79,48 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     ```powershell
     $devbody = @{ 
 
-        workspaceId = "[insert development workspace ID]"
+        workspaceId = "insert development workspace ID"
 
     } | ConvertTo-Json
 
-    $devurl = "pipelines/[insert pipeline ID]/stages/0/assignWorkspace" 
+    $devurl = "pipelines/insert pipeline ID/stages/0/assignWorkspace" 
     $devdeployResult = Invoke-PowerBIRestMethod -Url $devurl  -Method Post -Body $devbody | ConvertFrom-Json
     $devdeployResult | Format-List
 
 
     $testbody = @{ 
 
-        workspaceId = "[insert test workspace ID]"
+        workspaceId = "insert test workspace ID"
 
     } | ConvertTo-Json
 
-    $testurl = "pipelines/[insert pipeline ID]/stages/1/assignWorkspace" 
+    $testurl = "pipelines/insert pipeline ID/stages/1/assignWorkspace" 
     $testdeployResult = Invoke-PowerBIRestMethod -Url $testurl  -Method Post -Body $testbody | ConvertFrom-Json
     $testdeployResult | Format-List
 
 
     $body = @{ 
 
-        workspaceId = "[insert production workspace ID]"
+        workspaceId = "insert production workspace ID"
 
     } | ConvertTo-Json
 
-    $url = "pipelines/[insert pipeline ID]/stages/2/assignWorkspace" 
+    $url = "pipelines/insert pipeline ID/stages/2/assignWorkspace" 
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
     $deployResult | Format-List
     ```
 
-6. In preparation for promoting the asset in the Dev workspace to the Test workspace, lets get a listing of them so that we have their Ids.
+6. In preparation for promoting the assets in the Dev workspace to the Test workspace, lets get a listing of them so that we have their Ids.
     ```powershell
-    $dataseturl = "groups/[insert dev workspace ID]/datasets" 
+    $dataseturl = "groups/insert dev workspace ID/datasets" 
     $datasetdeployResult = Invoke-PowerBIRestMethod -Url $dataseturl  -Method Get 
     $datasetdeployResult 
 
-    $reporturl = "groups/[insert dev workspace ID]/reports" 
+    $reporturl = "groups/insert dev workspace ID/reports" 
     $reportdeployResult = Invoke-PowerBIRestMethod -Url $reporturl  -Method Get 
     $reportdeployResult 
 
-    $dashboardsurl = "groups/[insert dev workspace ID]/dashboards" 
+    $dashboardsurl = "groups/insert dev workspace ID/dashboards" 
     $dashboardsdeployResult = Invoke-PowerBIRestMethod -Url $dashboardsurl  -Method Get 
     $dashboardsdeployResult 
     ```
@@ -130,13 +130,13 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     $body = @{ 
         sourceStageOrder = 0 # The order of the source stage. Development (0), Test (1).   
         datasets = @(
-            @{sourceId = "[Insert dataset ID ]" }
+            @{sourceId = "Insert dataset ID " }
         )      
         reports = @(
-            @{sourceId = "[Insert report ID]" }
+            @{sourceId = "Insert report ID" }
         )            
         dashboards = @(
-            @{sourceId = "[Insert dashboard ID]" }
+            @{sourceId = "Insert dashboard ID" }
         )        
 
         options = @{
@@ -149,6 +149,49 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     } | ConvertTo-Json
 
 
-    $url = "pipelines/{0}/Deploy" -f "[insert pipeline ID]"
+    $url = "pipelines/{0}/Deploy" -f "insert pipeline ID"
+    $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
+    ```
+
+8. In preparation for promoting the assets in the Test workspace to the Prodcution workspace, lets get a listing of them so that we have their Ids.
+    ```powershell
+    $dataseturl = "groups/insert test workspace ID/datasets" 
+    $datasetdeployResult = Invoke-PowerBIRestMethod -Url $dataseturl  -Method Get 
+    $datasetdeployResult 
+
+    $reporturl = "groups/insert test workspace ID/reports" 
+    $reportdeployResult = Invoke-PowerBIRestMethod -Url $reporturl  -Method Get 
+    $reportdeployResult 
+
+    $dashboardsurl = "groups/insert test workspace ID/dashboards" 
+    $dashboardsdeployResult = Invoke-PowerBIRestMethod -Url $dashboardsurl  -Method Get 
+    $dashboardsdeployResult 
+    ```
+
+9. Now we are going to selectively promote assets from the Test workspace to the Production workspace using the script below.
+    ```powershell
+    $body = @{ 
+        sourceStageOrder = 1 # The order of the source stage. Test (1), Production (2).   
+        datasets = @(
+            @{sourceId = "Insert dataset ID" }
+        )      
+        reports = @(
+            @{sourceId = "Insert report ID" }
+        )            
+        dashboards = @(
+            @{sourceId = "Insert dashboard ID" }
+        )            
+
+        options = @{
+            # Allows creating new artifact if needed on the Test stage workspace
+            allowCreateArtifact = $TRUE
+
+            # Allows overwriting existing artifact if needed on the Test stage workspace
+            allowOverwriteArtifact = $TRUE
+        }
+    } | ConvertTo-Json
+
+
+    $url = "pipelines/{0}/Deploy" -f "insert pipeline ID"
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
     ```
