@@ -26,6 +26,7 @@ This is done manually through the Power BI Workspace via a web browser.  There a
 - [Get started with deployment pipelines](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-get-started)
 - [Assign a workspace to a deployment pipeline](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-assign)
 
+- - - -
 ###  Utilize PowerShell commands via the Power BI Rest API
 
 This option allows you to interact with the [Power BI REST API](https://docs.microsoft.com/en-us/rest/api/power-bi/) to automate commands via HTTP requests. Below are some example PowerShell scripts you can use that are based on the PowerShell examples at https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-automation#powershell-example.  These scripts are also found in the [powershell folder](./powershell) of this repository.
@@ -267,7 +268,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Delete | ConvertFrom-Json
     ```
 
-
+- - - -
 ###  Utilize Azure DevOps
 This allows you to automate the entire process using Azure DevOps.  There is one caveat to utilizing this; For enterprise deployments using multi-factor authentication, you must enable the Power BI service admin settings for a designated service principle.  
 
