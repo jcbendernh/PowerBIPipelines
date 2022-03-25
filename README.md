@@ -1,5 +1,5 @@
 # PowerBIPipelines
-In this repo, I will walk you through three options available with regards to utilizing Power BI Pipelines:
+In this repo, we will review three options available with regards to creating and executing Power BI Pipelines:
 1. [Manually through the Power BI Web Service](#manually-through-the-power-bi-web-service)
 2. [Utilize PowerShell commands via the Power BI Rest API](#utilize-powershell-commands-via-the-power-bi-rest-api)
 3. [Utilize Azure DevOps](https://github.com/jcbendernh/PowerBIPipelines#utilize-azure-devops)
@@ -44,7 +44,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     ```powershell
     Connect-PowerBIServiceAccount
     ```
-    You can utilize other sign in options.  They are detailed at [onnect-PowerBIServiceAccount](https://docs.microsoft.com/en-us/powershell/module/microsoftpowerbimgmt.profile/connect-powerbiserviceaccount?view=powerbi-ps)
+    You can utilize other sign in options.  They are detailed at [Connect-PowerBIServiceAccount](https://docs.microsoft.com/en-us/powershell/module/microsoftpowerbimgmt.profile/connect-powerbiserviceaccount?view=powerbi-ps)
 
 2. We will now create our pipeline using the code below.  Make sure to capture the id from the results after the script completes successfully.
     ```powershell
@@ -60,7 +60,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     $deployResult | Format-List
     ```
 
-3. This is optional, if you ever need to get a listing of the pipelines in your tenant, this will generate a listing with the Ids as well.
+3. This is optional, if you ever need to get a listing of the pipelines in your tenant, this will generate a listing with their corresponding Ids as well.
     ```powershell
     $url = "pipelines" 
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Get 
@@ -269,14 +269,16 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
 
 ###  Utilize Azure DevOps
-This is a great way to automate the entire process using Azure DevOps.  There is one major caveat to utilizing this. For enterprise deployments using multi-factor authentication, you must be able to enable the Power BI service admin settings for a designated service principle.  This is done in the Power BI web service under the Admin Portal | Tenant Settings.  For more on this topic, check out [Automate deployment pipelines - Use the Power BI automation tools extension] (https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-automation#use-the-power-bi-automation-tools-extension). 
+This allows you to automate the entire process using Azure DevOps.  There is one caveat to utilizing this; For enterprise deployments using multi-factor authentication, you must enable the Power BI service admin settings for a designated service principle.  
+
+This is done in the Power BI web service under the Admin Portal | Tenant Settings.  For more on this topic, check out [Automate deployment pipelines - Use the Power BI automation tools extension](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-automation#use-the-power-bi-automation-tools-extension). 
 
 
 #### Power BI automation tools
-1. To add the [Power BI automation tools](https://marketplace.visualstudio.com/items?itemName=ms-pbi-api.pbi-automation-tools) to your Azure DevOps instance, within Azure DevOps, go to Organizational Settings | Extensions and click Browse marketplace and search for <b>Power BI automation tools</B> and click the Get it Free button and then add it to your organization.
+1. To add the [Power BI automation tools](https://marketplace.visualstudio.com/items?itemName=ms-pbi-api.pbi-automation-tools) to your Azure DevOps instance, within Azure DevOps, go to Organizational Settings | Extensions and click Browse marketplace and search for <b>Power BI automation tools</B> and click the <B>Get it Free button</B> and then add it to your organization.
 
 2. Next you will need to add a service connection to your DevOps project under that organization.  To do so, go into the DevOps project you will utilize with the Power BI automation tools.  Under Settings | Service Connections, click New service connection and select Power BI and click Next.  Fill out the appropriate settings under Edit Service Connection and click Save:
-    1. Environment: options are Public, US Government, etc.
+    1. Environment: options are Public, US Government, etc.  <i>Most often this is Public.</i>
     2. Service Principle Id = Application (client) ID of the Service Principle in Active Directory
     3. Service principal key = The client secret value under the Service Principle in Active Directory
     4. Tenant ID = Application (client) ID of the Service Principle in Active Directory
@@ -301,7 +303,7 @@ Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AcceptLicense -All
 Import-Module -Name MicrosoftPowerBIMgmt
 ```
 
-After that, you will need to utilize the Connect-PowerBIServiceAccount commands similar to the PowerShell script below.
+After that, you will need to execute the Connect-PowerBIServiceAccount command.  Below is a PowerShell script example.
 ```javascript
 Connect-PowerBIServiceAccount -ServicePrincipal -CertificateThumbprint 38DA4BED389A014E69A6E6D8AE56761E85F0DFA4 -ApplicationId b5fde143-722c-4e8d-8113-5b33a9291468
 ```
