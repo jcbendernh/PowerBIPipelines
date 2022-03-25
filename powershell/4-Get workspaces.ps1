@@ -1,3 +1,5 @@
-﻿$url = "groups?$filter=contains(name,'COVID')" 
+﻿$url = "groups" 
 $deployResult = Invoke-PowerBIRestMethod -Url $url -Method Get 
 $deployResult 
+
+

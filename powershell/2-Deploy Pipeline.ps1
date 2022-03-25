@@ -1,7 +1,7 @@
 ﻿$body = @{ 
 
-    displayName = "insert pipeline name here"
-    description = "insert pipeline descrition here"
+    displayName = "[insert pipeline name here]"
+    description = "[insert pipeline descrition here]"
 
 } | ConvertTo-Json
 
