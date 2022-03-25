@@ -195,3 +195,75 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     $url = "pipelines/{0}/Deploy" -f "insert pipeline ID"
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
     ```
+
+10. This next command is only needed if you want to add a user to the pipeline.
+    ```powershell
+    $body = @{ 
+
+        identifier = "john@contoso.com"
+        accessRight = "Admin"
+        principalType = "User"
+
+    } | ConvertTo-Json
+
+    $url = "pipelines/insert pipeline ID/users" 
+    $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
+    ```
+
+11. If you added a user to a pipeline, you also need to give them the correct permissions to the workspaces within the pipeline.  For this example, we will add the user as a Workspace Admin to all workspaces.
+    ```powershell
+    $devbody = @{ 
+
+        emailAddress = "john@contoso.com"
+        groupUserAccessRight = "Admin"
+        principalType = "User"
+
+    } | ConvertTo-Json
+
+    $devurl = "groups/insert development workspace ID/users" 
+    $devdeployResult = Invoke-PowerBIRestMethod -Url $devurl  -Method Post -Body $devbody | ConvertFrom-Json
+
+    $testbody = @{ 
+
+        emailAddress = "john@contoso.com"
+        groupUserAccessRight = "Admin"
+        principalType = "User"
+
+    } | ConvertTo-Json
+
+    $testurl = "groups/insert test workspace ID/users" 
+    $testdeployResult = Invoke-PowerBIRestMethod -Url $testurl  -Method Post -Body $testbody | ConvertFrom-Json
+
+    $body = @{ 
+
+        emailAddress = "john@contoso.com"
+        groupUserAccessRight = "Admin"
+        principalType = "User"
+
+    } | ConvertTo-Json
+
+    $url = "groups/insert production workspace ID/users" 
+    $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
+    ```
+
+12. This next command is only needed if you want to delete a user from the pipeline.
+    ```powershell
+    $url = "pipelines/insert pipeline ID/users/john@contoso.com" 
+    $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Delete 
+    $deployResult 
+    ```
+    
+13. Finally if you deleted the user from the pipeline, you may want to also delete them from the workspaces.
+    ```powershell
+    $devurl = "groups/nsert development workspace ID/users/john@contoso.com" 
+    $devdeployResult = Invoke-PowerBIRestMethod -Url $devurl  -Method Delete  | ConvertFrom-Json
+
+
+    $testurl = "groups/nsert test workspace ID/users/john@contoso.com" 
+    $testdeployResult = Invoke-PowerBIRestMethod -Url $testurl  -Method Delete  | ConvertFrom-Json
+
+
+    $url = "groups/nsert production workspace ID/users/john@contoso.com" 
+    $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Delete | ConvertFrom-Json
+    ```
+
