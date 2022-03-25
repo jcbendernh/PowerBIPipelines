@@ -131,7 +131,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     $body = @{ 
         sourceStageOrder = 0 # The order of the source stage. Development (0), Test (1).   
         datasets = @(
-            @{sourceId = "Insert dataset ID " }
+            @{sourceId = "Insert dataset ID" }
         )      
         reports = @(
             @{sourceId = "Insert report ID" }
@@ -156,15 +156,15 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
 8. In preparation for promoting the assets in the Test workspace to the Production workspace, let's get a listing of them so that we have their Ids.
     ```powershell
-    $dataseturl = "groups/insert test workspace ID/datasets" 
+    $dataseturl = "groups/{0}/datasets" -f "insert test workspace ID" 
     $datasetdeployResult = Invoke-PowerBIRestMethod -Url $dataseturl  -Method Get 
     $datasetdeployResult 
 
-    $reporturl = "groups/insert test workspace ID/reports" 
+    $reporturl = "groups/{0}/reports" -f "insert test workspace ID"
     $reportdeployResult = Invoke-PowerBIRestMethod -Url $reporturl  -Method Get 
     $reportdeployResult 
 
-    $dashboardsurl = "groups/insert test workspace ID/dashboards" 
+    $dashboardsurl  = "groups/{0}/dashboards" -f "insert test workspace ID"
     $dashboardsdeployResult = Invoke-PowerBIRestMethod -Url $dashboardsurl  -Method Get 
     $dashboardsdeployResult 
     ```
