@@ -1,8 +1,8 @@
 # PowerBIPipelines
 In this repo, I will walk you through three options available with regards to utilizing Power BI Pipelines:
-1. [Manually through the Power BI Web Service](#deployment-options)
-2. Utilize PowerShell commands via the Power BI Rest API
-3. Utilize Azure DevOps
+1. [Manually through the Power BI Web Service](#manually-through-the-power-bi-web-service)
+2. [Utilize PowerShell commands via the Power BI Rest API](#utilize-powershell-commands-via-the-power-bi-rest-api)
+3. [Utilize Azure DevOps](https://github.com/jcbendernh/PowerBIPipelines#utilize-azure-devops)
 
 ## Key Concepts
 
