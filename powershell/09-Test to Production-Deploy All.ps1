@@ -1,14 +1,6 @@
 ﻿$body = @{ 
     sourceStageOrder = 1 # The order of the source stage. Test (1), Production (2).   
-    datasets = @(
-        @{sourceId = "Insert dataset ID" }
-    )      
-    reports = @(
-        @{sourceId = "Insert report ID" }
-    )            
-    dashboards = @(
-        @{sourceId = "Insert dashboard ID" }
-    )            
+       
 
     options = @{
         # Allows creating new artifact if needed on the Test stage workspace
@@ -20,5 +12,5 @@
 } | ConvertTo-Json
 
 
-$url = "pipelines/{0}/Deploy" -f "insert pipeline ID"
+$url = "pipelines/{0}/deployAll" -f "insert pipeline ID"
 $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json

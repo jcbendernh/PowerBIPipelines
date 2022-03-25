@@ -6,7 +6,7 @@
 
 } | ConvertTo-Json
 
-$devurl = "groups/insert development workspace ID/users" 
+$devurl = "groups/{0}/users" -f "insert development workspace ID"
 $devdeployResult = Invoke-PowerBIRestMethod -Url $devurl  -Method Post -Body $devbody | ConvertFrom-Json
 
 $testbody = @{ 
@@ -17,7 +17,7 @@ $testbody = @{
 
 } | ConvertTo-Json
 
-$testurl = "groups/insert test workspace ID/users" 
+$testurl = "groups/{0}/users" -f "insert test workspace ID"
 $testdeployResult = Invoke-PowerBIRestMethod -Url $testurl  -Method Post -Body $testbody | ConvertFrom-Json
 
 $body = @{ 
@@ -28,6 +28,6 @@ $body = @{
 
 } | ConvertTo-Json
 
-$url = "groups/insert production workspace ID/users" 
+$url = "groups/{0}/users" -f "insert production workspace ID"
 $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
 

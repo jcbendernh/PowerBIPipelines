@@ -77,14 +77,14 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     You can also apply filters to this.  For reference see [Group - Get Groups](https://docs.microsoft.com/en-us/rest/api/power-bi/groups/get-groups)
 
 5. Now we will assign the Development, Test and Production workspaces to the recently created pipeline.  We will need to insert the workspace Ids and the Pipeline Id into the PowerShell script below.
-    ```powershell
+   ```powershell
     $devbody = @{ 
 
         workspaceId = "insert development workspace ID"
 
     } | ConvertTo-Json
 
-    $devurl = "pipelines/insert pipeline ID/stages/0/assignWorkspace" 
+    $devurl = "pipelines/{0}/stages/0/assignWorkspace" -f "insert pipeline ID"
     $devdeployResult = Invoke-PowerBIRestMethod -Url $devurl  -Method Post -Body $devbody | ConvertFrom-Json
     $devdeployResult | Format-List
 
@@ -95,7 +95,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
     } | ConvertTo-Json
 
-    $testurl = "pipelines/insert pipeline ID/stages/1/assignWorkspace" 
+    $testurl = "pipelines/{0}/stages/1/assignWorkspace" -f "insert pipeline ID"
     $testdeployResult = Invoke-PowerBIRestMethod -Url $testurl  -Method Post -Body $testbody | ConvertFrom-Json
     $testdeployResult | Format-List
 
@@ -106,22 +106,22 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
     } | ConvertTo-Json
 
-    $url = "pipelines/insert pipeline ID/stages/2/assignWorkspace" 
+    $url = "pipelines/{0}/stages/2/assignWorkspace" -f "insert pipeline ID"
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
     $deployResult | Format-List
     ```
 
 6. In preparation for promoting the assets in the Dev workspace to the Test workspace, let's get a listing of them so that we have their Ids.
     ```powershell
-    $dataseturl = "groups/insert dev workspace ID/datasets" 
+    $dataseturl = "groups/{0}/datasets" -f "insert dev workspace ID"
     $datasetdeployResult = Invoke-PowerBIRestMethod -Url $dataseturl  -Method Get 
     $datasetdeployResult 
 
-    $reporturl = "groups/insert dev workspace ID/reports" 
+    $reporturl = "groups/{0}/reports" -f "insert dev workspace ID"
     $reportdeployResult = Invoke-PowerBIRestMethod -Url $reporturl  -Method Get 
     $reportdeployResult 
 
-    $dashboardsurl = "groups/insert dev workspace ID/dashboards" 
+    $dashboardsurl = "groups/{0}/dashboards" -f "insert dev workspace ID"
     $dashboardsdeployResult = Invoke-PowerBIRestMethod -Url $dashboardsurl  -Method Get 
     $dashboardsdeployResult 
     ```
@@ -169,19 +169,11 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     $dashboardsdeployResult 
     ```
 
-9. Now we are going to selectively promote assets from the Test workspace to the Production workspace using the script below.
+9. Now we are going to promote all assets from the Test workspace to the Production workspace using the script below.
     ```powershell
     $body = @{ 
         sourceStageOrder = 1 # The order of the source stage. Test (1), Production (2).   
-        datasets = @(
-            @{sourceId = "Insert dataset ID" }
-        )      
-        reports = @(
-            @{sourceId = "Insert report ID" }
-        )            
-        dashboards = @(
-            @{sourceId = "Insert dashboard ID" }
-        )            
+        
 
         options = @{
             # Allows creating new artifact if needed on the Test stage workspace
@@ -193,7 +185,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     } | ConvertTo-Json
 
 
-    $url = "pipelines/{0}/Deploy" -f "insert pipeline ID"
+    $url = "pipelines/{0}/deployAll" -f "insert pipeline ID"
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
     ```
 
@@ -207,7 +199,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
     } | ConvertTo-Json
 
-    $url = "pipelines/insert pipeline ID/users" 
+    $url = "pipelines/{0}/users" -f "insert pipeline ID" 
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
     ```
 
@@ -221,7 +213,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
     } | ConvertTo-Json
 
-    $devurl = "groups/insert development workspace ID/users" 
+    $devurl = "groups/{0}/users" -f "insert development workspace ID"
     $devdeployResult = Invoke-PowerBIRestMethod -Url $devurl  -Method Post -Body $devbody | ConvertFrom-Json
 
     $testbody = @{ 
@@ -232,7 +224,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
     } | ConvertTo-Json
 
-    $testurl = "groups/insert test workspace ID/users" 
+    $testurl = "groups/{0}/users" -f "insert test workspace ID"
     $testdeployResult = Invoke-PowerBIRestMethod -Url $testurl  -Method Post -Body $testbody | ConvertFrom-Json
 
     $body = @{ 
@@ -243,28 +235,28 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
     } | ConvertTo-Json
 
-    $url = "groups/insert production workspace ID/users" 
+    $url = "groups/{0}/users" -f "insert production workspace ID"
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
     ```
 
 12. This next command is only needed if you want to delete a user from the pipeline.
     ```powershell
-    $url = "pipelines/insert pipeline ID/users/john@contoso.com" 
+    $url = "pipelines/{0}/users/john@contoso.com" -f "insert pipeline ID"
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Delete 
     $deployResult 
     ```
 
 13. Finally if you deleted the user from the pipeline, you may want to also delete them from the workspaces.
     ```powershell
-    $devurl = "groups/insert development workspace ID/users/john@contoso.com" 
+    $devurl = "groups/{0}/users/john@contoso.com" -f "insert development workspace ID"
     $devdeployResult = Invoke-PowerBIRestMethod -Url $devurl  -Method Delete  | ConvertFrom-Json
 
 
-    $testurl = "groups/insert test workspace ID/users/john@contoso.com" 
+    $testurl = "groups/{0}/users/john@contoso.com" -f "insert test workspace ID"
     $testdeployResult = Invoke-PowerBIRestMethod -Url $testurl  -Method Delete  | ConvertFrom-Json
 
 
-    $url = "groups/insert production workspace ID/users/john@contoso.com" 
+    $url = "groups/{0}/users/john@contoso.com" -f "insert production workspace ID"
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Delete | ConvertFrom-Json
     ```
 

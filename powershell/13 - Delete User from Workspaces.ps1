@@ -1,11 +1,11 @@
-﻿$devurl = "groups/nsert development workspace ID/users/john@contoso.com" 
+﻿$devurl = "groups/{0}/users/john@contoso.com" -f "insert development workspace ID"
 $devdeployResult = Invoke-PowerBIRestMethod -Url $devurl  -Method Delete  | ConvertFrom-Json
 
 
-$testurl = "groups/nsert test workspace ID/users/john@contoso.com" 
+$testurl = "groups/{0}/users/john@contoso.com" -f "insert test workspace ID"
 $testdeployResult = Invoke-PowerBIRestMethod -Url $testurl  -Method Delete  | ConvertFrom-Json
 
 
-$url = "groups/nsert production workspace ID/users/john@contoso.com" 
+$url = "groups/{0}/users/john@contoso.com" -f "insert production workspace ID"
 $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Delete | ConvertFrom-Json
 
