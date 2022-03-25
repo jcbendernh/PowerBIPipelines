@@ -22,15 +22,15 @@ Also check out [Deployment pipelines best practices](https://docs.microsoft.com/
 
 ### Manually through the Power BI Web Service
 
-This is done manually through the Power BI Workspace via a web browser.  There are some really good tutorials for this on Microsoft Docs:
+This is done manually through the Power BI Workspace via a web browser.  There are some great tutorials for this on Microsoft Docs:
 - [Get started with deployment pipelines](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-get-started)
 - [Assign a workspace to a deployment pipeline](https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-assign)
 
 ###  Utilize PowerShell commands via the Power BI Rest API
 
-This option allows you to interact with the [Power BI REST API](https://docs.microsoft.com/en-us/rest/api/power-bi/) to automate commands via HTTP reqeusts. Below are some example powershell scripts you can use that are based on the Powershell examples at https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-automation#powershell-example.  These scripts are also found in the [powershell folder](./powershell) of this repository.
+This option allows you to interact with the [Power BI REST API](https://docs.microsoft.com/en-us/rest/api/power-bi/) to automate commands via HTTP requests. Below are some example PowerShell scripts you can use that are based on the PowerShell examples at https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-automation#powershell-example.  These scripts are also found in the [powershell folder](./powershell) of this repository.
 
-To utilize this functionality you must install the Power BI Cmdlets for Powershell by utilizing the following command in PowerShell.
+To utilize this functionality, you must install the Power BI Cmdlets for PowerShell by utilizing the following command in PowerShell.
 
 ```powershell
 Install-Module -Name MicrosoftPowerBIMgmt
@@ -38,13 +38,13 @@ Install-Module -Name MicrosoftPowerBIMgmt
 
 For more on this topic check out [Microsoft Power BI Cmdlets for Windows PowerShell and PowerShell Core](https://docs.microsoft.com/en-us/powershell/power-bi/overview?view=powerbi-ps)
 
-To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  Upload a report into the Dev workspace and create a dsahboard in the Dev workspace so that you have a dataset, report and dashboard in your Dev workspace.  Do not add any assets to the other workspaces.
+To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  Upload a report into the Dev workspace and create a dashboard in the Dev workspace so that you have a dataset, report and dashboard in your Dev workspace.  Do not add any assets to the other workspaces.
 
 1. First we need to connect to the Power BI service.  For the command below we are connecting as the Azure AD user, when running this, it will open an authentication prompt to connect as that user.
     ```powershell
     Connect-PowerBIServiceAccount
     ```
-    You can utilize other signin options.  They are detailed at [onnect-PowerBIServiceAccount](https://docs.microsoft.com/en-us/powershell/module/microsoftpowerbimgmt.profile/connect-powerbiserviceaccount?view=powerbi-ps)
+    You can utilize other sign in options.  They are detailed at [onnect-PowerBIServiceAccount](https://docs.microsoft.com/en-us/powershell/module/microsoftpowerbimgmt.profile/connect-powerbiserviceaccount?view=powerbi-ps)
 
 2. We will now create our pipeline using the code below.  Make sure to capture the id from the results after the script completes successfully.
     ```powershell
@@ -75,7 +75,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     ```
     You can also apply filters to this.  For reference see [Group - Get Groups](https://docs.microsoft.com/en-us/rest/api/power-bi/groups/get-groups)
 
-5. Now we will assign the Development, Test and Production workspaces to the reently created pipeline.  We will need to insert the workspace Ids and the Pipeline Id into the PowerShell script below.
+5. Now we will assign the Development, Test and Production workspaces to the recently created pipeline.  We will need to insert the workspace Ids and the Pipeline Id into the PowerShell script below.
     ```powershell
     $devbody = @{ 
 
@@ -110,7 +110,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     $deployResult | Format-List
     ```
 
-6. In preparation for promoting the assets in the Dev workspace to the Test workspace, lets get a listing of them so that we have their Ids.
+6. In preparation for promoting the assets in the Dev workspace to the Test workspace, let's get a listing of them so that we have their Ids.
     ```powershell
     $dataseturl = "groups/insert dev workspace ID/datasets" 
     $datasetdeployResult = Invoke-PowerBIRestMethod -Url $dataseturl  -Method Get 
@@ -153,7 +153,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
     $deployResult = Invoke-PowerBIRestMethod -Url $url  -Method Post -Body $body | ConvertFrom-Json
     ```
 
-8. In preparation for promoting the assets in the Test workspace to the Prodcution workspace, lets get a listing of them so that we have their Ids.
+8. In preparation for promoting the assets in the Test workspace to the Production workspace, let's get a listing of them so that we have their Ids.
     ```powershell
     $dataseturl = "groups/insert test workspace ID/datasets" 
     $datasetdeployResult = Invoke-PowerBIRestMethod -Url $dataseturl  -Method Get 
@@ -269,7 +269,7 @@ To prepare for this section, create 3 workspaces:  Dev, Test, and Production.  U
 
 
 ###  Utilize Azure DevOps
-This is a great way to automate the entire process using Azure DevOps.  There is one major caveat to utilizing this. For enterpise deployments usng multi-factor authentication, you must be able to enable the Power BI service admin settings for a designated service principle.  This is done in the Power BI web service under the Admin Portal | Tenant Settings.  For more on this topic, check out [Automate deployment pipelines - Use the Power BI automation tools extension] (https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-automation#use-the-power-bi-automation-tools-extension). 
+This is a great way to automate the entire process using Azure DevOps.  There is one major caveat to utilizing this. For enterprise deployments using multi-factor authentication, you must be able to enable the Power BI service admin settings for a designated service principle.  This is done in the Power BI web service under the Admin Portal | Tenant Settings.  For more on this topic, check out [Automate deployment pipelines - Use the Power BI automation tools extension] (https://docs.microsoft.com/en-us/power-bi/create-reports/deployment-pipelines-automation#use-the-power-bi-automation-tools-extension). 
 
 
 #### Power BI automation tools
@@ -278,23 +278,23 @@ This is a great way to automate the entire process using Azure DevOps.  There is
 2. Next you will need to add a service connection to your DevOps project under that organization.  To do so, go into the DevOps project you will utilize with the Power BI automation tools.  Under Settings | Service Connections, click New service connection and select Power BI and click Next.  Fill out the appropriate settings under Edit Service Connection and click Save:
     1. Environment: options are Public, US Government, etc.
     2. Service Principle Id = Application (client) ID of the Service Principle in Active Directory
-    3. Service principal key = The cleint secret value under the Service Principle in Active Directory
+    3. Service principal key = The client secret value under the Service Principle in Active Directory
     4. Tenant ID = Application (client) ID of the Service Principle in Active Directory
     5. Service connection name: descriptive name for your service connection.
 
 3. Next you can add tasks to your pipeline within DevOps by searching under Power BI under Add tasks.  The following tasks are available to utilize:
     1. Delete a deployment pipeline
     2. Create a new deployment pipeline
-    3. Assign a workspape to deployment pipleine
+    3. Assign a workspace to deployment pipeline
     4. Add a user to a workspace
     5. Remove a workspace from a deployment pipeline
-    6. Add a user to a deploymenbt pipeline
+    6. Add a user to a deployment pipeline
     7. Deploy content in a deployment pipeline
 
 #### PowerShell commands within Azure DevOps
-Alternatively you could utilize Powershell commands as your tasks within your DevOps pipelines.  However to do so, you must use an installed certificate to the Public cloud with your Service Principal.  For more on this topic see [Connect-PowerBIServiceAccount](https://docs.microsoft.com/en-us/powershell/module/microsoftpowerbimgmt.profile/connect-powerbiserviceaccount?view=powerbi-ps)
+Alternatively you could utilize PowerShell commands as your tasks within your DevOps pipelines.  However, to do so, you must use an installed certificate to the Public cloud with your Service Principal.  For more on this topic see [Connect-PowerBIServiceAccount](https://docs.microsoft.com/en-us/powershell/module/microsoftpowerbimgmt.profile/connect-powerbiserviceaccount?view=powerbi-ps)
 
-Furthermore, in order for DevOps to keep the PowerBIMgmt libabary across PowerShell tasks, make sure to utilize the script below as your first task in the pipeline
+Furthermore, in order for DevOps to keep the PowerBIMgmt library across PowerShell tasks, make sure to utilize the script below as your first task in the pipeline
 ```javascript
 Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AcceptLicense -AllowClobber -SkipPublisherCheck -Force
 
